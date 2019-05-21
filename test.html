@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var today=new Date(); 
+        var day1=new Date("2019-5-21 00:00:00");
+        document.write(today);
+        var sumSecond=parseInt((today-day1)/1000);
+        console.log(sumSecond);        
+        var hour=parseInt(sumSecond/3600);
+        sumSecond-=hour*3600;
+        var minuts=parseInt(sumSecond/60);
+        var second=(sumSecond)%60;
+        console.log(hour);
+        console.log(minuts);
+        console.log(second);
+    </script>
+</body>
+</html>
