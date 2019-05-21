@@ -12,8 +12,16 @@ window.onload=function(){
     /**
      * 给day标签加上选择
      */
+    var arrSelect=document.getElementsByTagName("select");
+    for(var i=0;i<arrSelect.length;i++){
+        arrSelect[i].onchange=function(){
+            setInterval(function(){
+                getDate();
+            },500);
+        }
+    }
     month.onchange=function(){
-        month.removeChild(month.children[0]);
+        if(month.children[0].innerHTML==0)month.removeChild(month.children[0]);
         while(day.children.length){
             day.removeChild(day.children[0]);
         }
@@ -32,56 +40,42 @@ window.onload=function(){
             day.appendChild(oOption);
         }
     }
+    document.getElementById("001").onclick=function(){
+        getDate();
+    }
+    function getDate(){
+        var year=document.getElementById("year-select");
+        var month=document.getElementById("month-select");
+        var day=document.getElementById("day-select");
+        var h=document.getElementById("hour-select");
+        var m=document.getElementById("minite-select");
+        var s=document.getElementById("second-select");
+        if(month.value!=0 && day.value!="请选择月份"){
+            var odate=new Date(year.value,month.value-1,day.value,h.value,m.value,s.value);
+            var today=new Date();
+            var res="现在距离 "+odate.getFullYear()+"年"+odate.getMinutes()+"月"+odate.getDate()+"日"+" "+odate.getHours()+":"+odate.getMinutes()+":"+odate.getSeconds();
+            if(odate>today) res+="还有 ";
+            else res+="已经过去 ";        
+            
+            var sumSecond=Math.abs(parseInt((today-odate)/1000));
+            var iday=parseInt(sumSecond/(3600*24));
+            sumSecond-=iday*3600*24;
+            var hour=parseInt(sumSecond/3600);
+            sumSecond-=hour*3600;
+            var miniuts=parseInt(sumSecond/60);
+            var second=(sumSecond)%60;
+
+            res=res+" "+iday+" 天 "+hour+" 小时 "+miniuts+" 分 "+second+" 秒 ";
+            document.getElementById("result-wrapper").innerHTML=res;
+        }
+        else{
+            console.log("月份日期存在错误");
+        }
+    }
 }
+
 
 function getMonth(year){
-    if(isLeapYear(year)){
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-function isLeapYear(year){
-    if(year%400==0 || (year%4==0 && year%100!=0 )){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-function trans(n){
-    if(n<10){
-        return "0"+n;
-    }
-    else{
-        return ""+n;
-    }
-}
-
-
-function getDate(){
-    var sDate="";
-    var oDate=new Date();
-    sDate=oDate.getFullYear()+"-"+trans(oDate.getMonth()+1)+"-"+trans(oDate.getDate())+" "+transDateEnglish(oDate.getDay())+"  "+AmOrPM(oDate);
-    return sDate;
-}
-
-function transDateEnglish(n){
-    var arrDay=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    return arrDay[n%7];
-}
-
-function AmOrPM(obj){
-    var h=obj.getHours();
-    var m=obj.getMinutes();
-    var s=obj.getSeconds();
-    if(0<=h && h<=12){
-        return trans(h)+":"+trans(m)+":"+trans(s)+" AM";
-    }
-    else if(12<h && h<=23){
-        return trans(h-12)+":"+trans(m)+":"+trans(s)+" PM";
-    }
+    if(year%400==0 || (year%4==0 && year%100!=0)) return 1;
+    else  return 0;
 }
