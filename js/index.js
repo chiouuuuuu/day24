@@ -53,7 +53,7 @@ window.onload=function(){
         if(month.value!=0 && day.value!="请选择月份"){
             var odate=new Date(year.value,month.value-1,day.value,h.value,m.value,s.value);
             var today=new Date();
-            var res="现在距离 "+odate.getFullYear()+"年"+odate.getMinutes()+"月"+odate.getDate()+"日"+" "+odate.getHours()+":"+odate.getMinutes()+":"+odate.getSeconds();
+            var res="现在距离 "+odate.getFullYear()+"年"+odate.getMonth()+1+"月"+odate.getDate()+"日"+" "+odate.getHours()+":"+odate.getMinutes()+":"+odate.getSeconds();
             if(odate>today) res+="还有 ";
             else res+="已经过去 ";        
             
