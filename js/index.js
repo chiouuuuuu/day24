@@ -53,9 +53,9 @@ window.onload=function(){
         if(month.value!=0 && day.value!="请选择月份"){
             var odate=new Date(year.value,month.value-1,day.value,h.value,m.value,s.value);
             var today=new Date();
-            var res="现在距离 "+odate.getFullYear()+"年"+odate.getMonth()+1+"月"+odate.getDate()+"日"+" "+odate.getHours()+":"+odate.getMinutes()+":"+odate.getSeconds();
-            if(odate>today) res+="还有 ";
-            else res+="已经过去 ";        
+            var res="现在距离 "+odate.getFullYear()+"年"+(parseInt(odate.getMonth())+1)+"月"+odate.getDate()+"日"+" 星期"+transDate(odate.getDay())+" "+trans(odate.getHours())+":"+trans(odate.getMinutes())+":"+trans(odate.getSeconds());
+            if(odate>today) res+=" 还有 ";
+            else res+=" 已经过去 ";        
             
             var sumSecond=Math.abs(parseInt((today-odate)/1000));
             var iday=parseInt(sumSecond/(3600*24));
@@ -78,4 +78,17 @@ window.onload=function(){
 function getMonth(year){
     if(year%400==0 || (year%4==0 && year%100!=0)) return 1;
     else  return 0;
+}
+function trans(n){
+    if(n<10){
+        return "0"+n;
+    }
+    else{
+        return ""+n;
+    }
+}
+
+function transDate(n){
+    var arrDay=["天","一","二","三","四","五","六"];
+    return arrDay[n%7];
 }
